@@ -1,0 +1,70 @@
+<div  fxLayoutAlign.lt-xl="center">
+
+    <h1>Panel de control de categorías</h1>
+</div>
+
+<mat-divider></mat-divider>
+<br>
+<div  fxLayoutAlign.lt-xl="center">
+
+    <mat-form-field fxFlex="40">
+        <mat-label>Seleccione categoría a editar</mat-label>
+        <mat-select [(ngModel)]="_id" (ngModelChange)="getCategoria($event)">
+
+            <mat-option>Salir sin seleccionar</mat-option>
+            <mat-option *ngFor="let categoria of categorias;"  [value]="categoria._id">
+                {{ categoria.nombre }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+</div>
+
+<div fxLayout="row" fxLayoutAlign.lt-xl="center" fxLayout.lt-md="column">
+    <div fxFlex="50"
+    fxLayout="column"
+    fxLayoutAlign.lt-xl="center"
+    >
+    <br>
+    <div  fxLayoutAlign.lt-xl="center">
+
+        <h1> {{ ( categoria._id ) ? 'Actualizar Categoría' : 'Crear Categoría' }}</h1>
+    </div>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-form-field *ngIf="categoria._id" fxFlex="20">
+            <mat-label>Autor De La Categoría</mat-label>
+            <input matInput [value]="categoria.usuario.nombre" disabled>
+        
+        </mat-form-field>
+<mat-form-field fxFlex="80">
+    <mat-label>Nombre De La Categoría</mat-label>
+    <input matInput type="text" [(ngModel)]="categoria.nombre" required>
+
+</mat-form-field>
+
+
+
+<br>
+<div fxLayout>
+
+    <button mat-raised-button color="primary"
+            (click)="actualizarCategoria()"    
+    >
+        <mat-icon>edit</mat-icon>
+        {{ ( categoria._id ) ? 'Actualizar' : 'Crear' }}
+    </button>
+
+    <span class="spacer"></span>
+
+    <button *ngIf="categoria._id"
+             mat-raised-button 
+             color="warn"
+             (click)="borrarCategoria()">
+        <mat-icon>remove</mat-icon>
+        Borrar Categoría
+    </button>
+</div>
+
+</div>

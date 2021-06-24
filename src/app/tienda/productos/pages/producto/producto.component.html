@@ -1,0 +1,68 @@
+<mat-grid-list cols="1" *ngIf="!producto; else divProducto">
+    <mat-grid-tile>
+        <mat-spinner></mat-spinner>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<ng-template #divProducto>
+    <h1> <span class="material-icons">
+        sell
+        </span> {{ producto.nombre }} </h1>
+    <small>{{ producto.categoria.nombre }}</small>
+    <div fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="30px">
+    
+    <div fxFlex="50">
+        
+        <mat-divider></mat-divider>
+             <br>
+             <img mat-card-image [src]="producto | imagen">
+         </div>
+
+         <div fxFlex="50">
+             <mat-divider></mat-divider>
+             <br>
+             <h2> Descripción: </h2>
+             <h3>{{ producto.descripcion }}</h3>
+            
+            <mat-list>
+                
+                
+                    <h1>Precio {{ producto.precio }} <span class="material-icons">
+                    euro
+                    </span></h1>
+                
+                    <button mat-button 
+                    color="accent">
+                <span class="material-icons">
+                    add_shopping_cart
+                    </span> Añadir al carrito
+                </button>
+                    <button mat-button 
+                    color="primary">
+                <span class="material-icons">
+                    credit_score
+                    </span> Comprar ahora</button>
+                
+                
+            </mat-list>
+
+            <br>
+            <button mat-button 
+                    (click)="regresar()"
+                    color="warn">
+                    <span class="material-icons">
+                        arrow_back
+                        </span>  Regresar
+            </button>
+         </div>
+
+    </div> 
+    <br>
+    <mat-divider></mat-divider> 
+    
+    <h2 class="pie"> <span class="material-icons">
+        local_shipping
+        </span> <br> También te llevamos la comida a tu domicilio </h2>
+</ng-template>

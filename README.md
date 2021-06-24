@@ -1,0 +1,6 @@
+# Tienda de una cafetería
+
+## Esta es una tienda online para una cafetería, hecha con NodeJS (RESTSERVER) y Angular.
+
+
+
