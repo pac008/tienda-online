@@ -3,8 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'tienda',
     loadChildren: () => import('./tienda/tienda.module').then( m => m.TiendaModule )
+  },
+  {
+    path: '',
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule )
+    
   }
 ];
 

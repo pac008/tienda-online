@@ -1,0 +1,52 @@
+<section class="backg">
+
+    <mat-card>
+      <mat-card-header>
+          <mat-card-title>Registro</mat-card-title>
+        </mat-card-header>
+        
+        <form [formGroup]="miFormulario">
+          
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+              <input matInput placeholder="nombre" formControlName="nombre">
+              <mat-error *ngIf="elCampoNoEsValido('nombre')">Nombre inválido</mat-error>
+            </mat-form-field>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>E-mail</mat-label>
+              <input matInput type="email" placeholder="pat@example.com" formControlName="correo">
+              <mat-error *ngIf="elCampoNoEsValido('correo')">E-mail inválido</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+              <mat-label>Contraseña</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+              <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </span>
+              <mat-error *ngIf="elCampoNoEsValido('password')">Contraseña inválida</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>confirmar Contraseña</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+              <span mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </span>
+              <mat-error *ngIf="elCampoNoEsValido('confirmPassword')">Contraseña inválida</mat-error>
+            </mat-form-field>
+            
+              <mat-card-actions>
+              <div class="derecha">
+
+                <button mat-button (click)="guardar()" > <mat-icon>add</mat-icon> Crear cuenta</button>
+                <button mat-button><mat-icon>how_to_reg</mat-icon> Ya tengo cuenta</button>
+              </div>
+            </mat-card-actions>
+          </form>
+        </mat-card>
+          
+          
+        
+      </section>

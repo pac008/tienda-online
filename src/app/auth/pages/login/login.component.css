@@ -1,0 +1,29 @@
+.backg {
+    /* background-image: radial-gradient(red, black); */
+    background-image: url("./../../../../assets/images/background/login-register3.jpg");
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+}
+mat-form-field{
+    width: 94%;
+}
+mat-card{
+    top:30%;
+    width: 100%;
+    max-width: 16rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+span{
+    cursor: pointer;
+}
+.derecha {
+    text-align: end;
+}
