@@ -1,5 +1,5 @@
 
-<h1 class="text-center">Listado de productos</h1>
+<h1 class="text-center">Nuestros mejores productos para tí</h1>
 <mat-divider></mat-divider>
 <br>
 <div fxLayout="row wrap" 
@@ -9,10 +9,13 @@
     <div fxFlex="20" 
          fxFlex.lg="15" 
          fxFlex.sm="30" 
-         *ngFor="let producto of productos">
+         *ngFor="let producto of productos"
+         >
 
-         
-        <app-producto-tarjeta [producto]="producto"></app-producto-tarjeta>
+         <div class="polaroid">
+
+             <app-producto-tarjeta [producto]="producto"></app-producto-tarjeta>
+         </div>
 
     </div>
 </div>

@@ -1,6 +1,6 @@
 <mat-sidenav-container fullscreen>
     <mat-sidenav #sidenav mode="push">
-        <mat-toolbar class="primary">
+        <mat-toolbar color="primary">
 
             <span>Menú</span>
             <span class="spacer"></span>
@@ -40,12 +40,9 @@
         <span class="spacerTitle">
 
         </span>
-        <span class="material-icons">
+        <span routerLink="./listado" class="material-icons">
             home
         </span> 
-        <span class="material-icons iconos">
-            store
-        </span>
         <span class="material-icons iconos">
             shopping_cart
         </span>
@@ -55,7 +52,7 @@
         <span class="spacer"></span>
 
 
-        <button mat-stroked-button>
+        <button (click)="logout()" mat-stroked-button>
             Logout
         </button>
     </mat-toolbar>

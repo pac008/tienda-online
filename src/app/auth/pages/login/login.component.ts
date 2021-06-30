@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import Swal from 'sweetalert2';
+import { Usuario } from '../../interfaces/usuario.interface';
 
 @Component({
   selector: 'app-login',
@@ -32,10 +34,17 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.login( this.miFormulario.value )
-          .subscribe( resp => {
-              console.log(resp);
+          .subscribe( (usuario: Usuario) => {
+              console.log(usuario);
+              localStorage.setItem('token', usuario.token)
               this.router.navigate(['/tienda'])
-          }, err => console.log( err ))
+          }, err =>{
+             console.log( err );
+             Swal.fire({
+               icon: 'error',
+               text: err.error.msg
+             });
+          })
 
   }
 }

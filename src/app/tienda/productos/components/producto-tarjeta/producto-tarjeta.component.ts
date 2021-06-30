@@ -8,6 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
   mat-card{
     margin-top: 20px;
   }
+  .derecha{
+    text-align: end;
+  }
+  .center{
+    text-align: center;
+  }
   `
   ]
 })

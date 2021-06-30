@@ -22,7 +22,7 @@
             <mat-error *ngIf="elCampoNoEsValido('password')">Contraseña inválida</mat-error>
           </mat-form-field>
           <mat-card-actions>
-            <button mat-button>Crear Cuenta <mat-icon>person_add</mat-icon></button>
+            <a routerLink="/registro" mat-button>Crear Cuenta <mat-icon>person_add</mat-icon></a>
             <span class="spacer"></span>
             <button mat-button (click)="login()" >Ingresar <mat-icon>login</mat-icon></button>
           </mat-card-actions>

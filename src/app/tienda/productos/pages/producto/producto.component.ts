@@ -43,6 +43,6 @@ export class ProductoComponent implements OnInit {
 
 
   regresar(){
-    this.router.navigate(['/productos/listado'])
+    this.router.navigate(['/tienda/listado'])
   }
 }

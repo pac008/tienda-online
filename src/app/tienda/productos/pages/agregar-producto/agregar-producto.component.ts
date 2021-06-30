@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs/operators';
 import { FileInput } from 'ngx-material-file-input';
+
+import { ConfirmarComponent } from '../../components/confirmar/confirmar.component';
 import { ProductosService } from '../../../services/productos.service';
 import { ProductoElement, Categoria } from '../../interfaces/producto.interface';
-import { map, switchMap } from 'rxjs/operators';
-import { FormBuilder, Validators } from '@angular/forms';
 import { CategoriasService } from '../../../services/categorias.service';
 
 
@@ -33,11 +36,12 @@ export class AgregarProductoComponent implements OnInit {
   };
 
   public imagen:FileInput;
-  constructor(private fb: FormBuilder,
-              private productosService: ProductosService,
+  constructor(private productosService: ProductosService,
               private categoriasService: CategoriasService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {}
+              private activatedRoute: ActivatedRoute,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.obtenerCategorias();
@@ -60,13 +64,21 @@ export class AgregarProductoComponent implements OnInit {
 
   obtenerCategorias(){
     this.categoriasService.getCategorias().subscribe( ({ categorias }) => {
-      this.categorias = categorias
-      console.log( categorias );
+      this.categorias = categorias;
     })
   }
 
   borrarProducto(){
-    this.productosService.borrarProducto( this.producto._id ).subscribe( resp => { console.log( resp ) }, err => console.log( err) )
+    const dialog = this.dialog.open( ConfirmarComponent, {
+      data: { ...this.producto }
+    });
+
+    dialog.afterClosed().pipe( 
+      switchMap( resp => resp ? this.productosService.borrarProducto( this.producto._id ) : '' )
+      )
+      .subscribe( resp => {
+        this.router.navigate(['/tienda/listado'])
+      }, err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) );
   }
   guardar() {
      
@@ -74,22 +86,22 @@ export class AgregarProductoComponent implements OnInit {
 
     if ( this.producto._id ) {
       //Actualizar
+      if( this.imagen ) {
+        this.actualizarImagenProducto( this.producto._id );
+      }
       this.productosService.actualizarProducto( this.producto )
       .subscribe( (producto: ProductoElement) => {
                 this.producto = producto; 
-                //this.mostrarSnackbar('producto actualizado')
-              }, err => console.log( err ) )
+                this.mostrarSnackbar('producto actualizado')
+      }, err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) )
     } else {
 
       //Crear
       this.productosService.agregarProducto( this.producto )
                     .subscribe( (producto:ProductoElement) => {
-                
-                        console.log(producto);
                         this.actualizarImagenProducto( producto._id );
                       
-                      
-                    }, err => console.log(err) );
+                    }, err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) );
     }
 
   }
@@ -99,9 +111,14 @@ export class AgregarProductoComponent implements OnInit {
     this.productosService.agregarImagenProducto( this.imagen.files[0], idProducto )
                 .subscribe( resp => {
                     console.log( resp );
-                    this.router.navigate(['/productos/editar', this.producto._id ]) 
-                    //this.mostrarSnackbar('Heroe registrado')
-                }, err => console.log(err))
+                    this.router.navigate(['/tienda/listado']); 
+                    this.mostrarSnackbar('Producto registrado')
+                }, err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) )
   }
 
+  mostrarSnackbar( mensaje: string ) {
+    this.snackBar.open( mensaje, 'ok!', {
+      duration: 2500
+    });
+  }
 }

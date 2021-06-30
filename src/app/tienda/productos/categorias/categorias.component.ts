@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriasService } from '../../services/categorias.service';
 import { Categoria, Categorias } from '../interfaces/producto.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-categorias',
@@ -26,7 +27,8 @@ export class CategoriasComponent implements OnInit {
   };
   
   public _id: string = '';
-  constructor(private categoriasService: CategoriasService ) { }
+  constructor(private categoriasService: CategoriasService,
+              private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
     this.categoriasService.getCategorias().subscribe( ({ categorias }) => { 
@@ -55,7 +57,9 @@ export class CategoriasComponent implements OnInit {
   crearCategoria(){
     this.categoriasService.crearCategoria( this.categoria.nombre ).subscribe( categoria => {
       console.log(categoria);
-    },err => console.log( err) );
+      this.mostrarSnackbar(`Categoría creada`);
+      this.ngOnInit();
+    },err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) );
   }
 
   actualizarCategoria(){
@@ -64,7 +68,9 @@ export class CategoriasComponent implements OnInit {
     if( this.categoria._id ){
       this.categoriasService.actualizarCategoria( this.categoria ).subscribe( categoria => {
         console.log( categoria );
-      }, err => console.log( err ) );
+        this.mostrarSnackbar(`Categoría actualizada`);
+        this.ngOnInit()
+      },err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) );
     } else {
       this.crearCategoria();
     }
@@ -73,6 +79,14 @@ export class CategoriasComponent implements OnInit {
   borrarCategoria(){
     this.categoriasService.borrarCategoria( this.categoria._id ).subscribe( resp => {
       console.log(resp);
-    },err => console.log(err) );
+      this.mostrarSnackbar(`Categoría borrada`);
+      this.ngOnInit();
+    },err => this.mostrarSnackbar(`Error!! ${ err.error.msg }`) );
+  }
+  
+  mostrarSnackbar( mensaje: string ) {
+    this.snackBar.open( mensaje, 'ok!', {
+      duration: 2500
+    });
   }
 }

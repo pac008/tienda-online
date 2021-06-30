@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
+import { Usuario } from '../../interfaces/usuario.interface';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -42,11 +43,22 @@ export class RegistroComponent implements OnInit {
     }
 
    this.authService.registro( this.miFormulario.value )
-                             .subscribe( usuario => {
+                             .subscribe( (usuario: Usuario) => {
                                console.log( usuario);
+                               Swal.fire({
+                                title: `Bienvenido, ${ usuario.usuario.nombre }`,                              
+                                icon: 'success',
+                                text: `Ya puedes ingresar con tu cuenta, ¡disfruta!`,
+                                confirmButtonText: 'Cool'
+                               });
                                this.router.navigate(['/login'])
-                             },err => console.log( err ) )
+                             },err => {
+                               console.log( err ) 
+                               Swal.fire({
+                                 icon: 'error',
+                                 text: 'El email ya existe'
+                               });
+                             });
 
-    this.miFormulario.reset();
   }
 }

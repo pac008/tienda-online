@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { Producto, Categorias } from '../productos/interfaces/producto.interface';
 
 @Injectable({
@@ -9,10 +9,12 @@ import { Producto, Categorias } from '../productos/interfaces/producto.interface
 export class ProductosService {
 
   private url = environment.url;
+  private token = localStorage.getItem('token');
   private opcions = new HttpHeaders({
-    'x-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDdmNDczMTMzNzlmNDM1ZTBhNzVmOWUiLCJpYXQiOjE2MjQ0NTYzOTEsImV4cCI6MTYyNDQ3MDc5MX0.innytUz2ZPGWQIpqT-8VD0CciZXYvSbmNPQ6EIUNZ6w'
+    'x-token': this.token
   });
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient ) {
+  }
 
  
 
@@ -39,7 +41,7 @@ export class ProductosService {
     const formData = new FormData();
     formData.append('archivo', archivo);
    
-    return this.http.put(`${ this.url }/api/uploads/productos/60d0aed8cae8d9323c9e4f90`, formData)
+    return this.http.put(`${ this.url }/api/uploads/productos/${ id }`, formData)
   }
   agregarProducto( { categoria, nombre, descripcion, precio } ){
     

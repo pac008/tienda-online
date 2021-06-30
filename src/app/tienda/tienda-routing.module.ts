@@ -10,7 +10,7 @@ import { CategoriasComponent } from './productos/categorias/categorias.component
 
 const routes: Routes = [
   {
-    path: 'productos',
+    path: '',
     component: HomeComponent,
     children:[
       { path: 'listado', component: ListadoProductosComponent },

@@ -21,6 +21,7 @@ import { ProductosService } from './services/productos.service';
 import { ProductoTarjetaComponent } from './productos/components/producto-tarjeta/producto-tarjeta.component';
 import { CategoriasService } from './services/categorias.service';
 import { CategoriasComponent } from './productos/categorias/categorias.component';
+import { ConfirmarComponent } from './productos/components/confirmar/confirmar.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CategoriasComponent } from './productos/categorias/categorias.component
     ImagenPipe,
     ProductoTarjetaComponent,
     
-    CategoriasComponent
+    CategoriasComponent,
+         ConfirmarComponent
   ],
   providers:[
     ProductosService,

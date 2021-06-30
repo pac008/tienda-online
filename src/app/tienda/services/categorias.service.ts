@@ -1,6 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { Categorias, Categoria } from '../productos/interfaces/producto.interface';
 
 @Injectable({
@@ -9,8 +9,9 @@ import { Categorias, Categoria } from '../productos/interfaces/producto.interfac
 export class CategoriasService {
   
   private url = environment.url;
+  private token = localStorage.getItem('token');
   private opcions = new HttpHeaders ({
-    'x-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDdmNDczMTMzNzlmNDM1ZTBhNzVmOWUiLCJpYXQiOjE2MjQ0ODUzMDYsImV4cCI6MTYyNDQ5OTcwNn0.btp3iKqzG5yFvQB3HK2d3FYwymBTNmolfMlkO0dPgv8'
+    'x-token': this.token
   });
   constructor(private http: HttpClient ) { }
 
